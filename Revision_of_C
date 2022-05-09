@@ -1,0 +1,34 @@
+In the beginning, there were 0's and 1's.
+                             -GRR
+
+A byte is the smallest unit that can be addressed by a CPU.
+
+I revised the:
+$$$ memory structure of the computer and the uses.
+- The stack: Declaration of variables.
+- The Heap: Allocation of memory and used during runtime.
+- The BSS: Uninitialized global variables.
+- The Data: Initialized global variables.
+- Text: Intructions the program run(Read only and executable).
+
+$$$ Compilation steps
+- Preprocessing: Handles comment, macros
+- Compiling: Converts the code to assembly code
+- Assembling: Converts the code to object code
+- Linking: Linking libraries in the code
+
+$$$ variables
+- Data types:int, float, double, char
+- Size of data types
+- padding
+- Writing and compiling a simple program
+
+$$$ Pointers and memory allocation
+- Pointers: A variable that contains address of variables(char *ptr->a char pointer).
+- Array: contain variables of the same data type.
+- Relationship between array and pointers.
+- Pointers Arithmetic.
+- Dereferencing a pointer: * the derefrence operator(*ptr)
+- Memory allocation: Using malloc, calloc and realloc.
+- Memory deallocation: Using free.
+- Multidimensonal arrays: Indexing multidimensional arrays using array syntax and pointer syntax.
