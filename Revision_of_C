@@ -32,3 +32,16 @@ $$$ Pointers and memory allocation
 - Memory allocation: Using malloc, calloc and realloc.
 - Memory deallocation: Using free.
 - Multidimensonal arrays: Indexing multidimensional arrays using array syntax and pointer syntax.
+
+$$$ Memory Allocation Errors
+- Memory Leaks: Objects in memory that are no longer in use but that are freed.
+- Premature Free: Objects that is still in use by the program is freed.
+- Double Free: Freeing an object that is already free.
+- Wild Frees: Attempts to free a pointer in memory that was not returned by malloc.
+- Memory Smashing: Less memory is allocated than the amount of memory requested.
+- Use Valgrind to debug memory allocation errors
+
+$$$ GDB tool
+- Installed gdb tool and used it on a test case.
+- Learnt the various commands related to the GDB tool(r -> run, b -> break, l -> list etc)
+
