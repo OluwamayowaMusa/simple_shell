@@ -18,5 +18,7 @@ char **get_cmd(char *cmd_ptr);
 int no_arg(char *str, char *delim);
 void _execute(char **arr_cmd);
 void free_arrcmd(char **arrCmd);
+void arr_cmd_size(char ***ptrCmd, int argNum, char *str);
+void parse_exec_free(char *cmd);
 
 #endif

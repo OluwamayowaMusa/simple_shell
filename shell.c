@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
 			if (res == -1)
 			{
 				free(cmd);
-				cmd = NULL;
 				write(STDERR_FILENO, "\n", 1);
 				exit(2);
 			}

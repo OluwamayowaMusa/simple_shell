@@ -27,7 +27,7 @@ int no_arg(char *str, char *delim)
 
 /**
  * arr_cmd_size - Get the size of array od strings
- * @ptr_cmd: Pointer to array of commands and arguments
+ * @ptrCmd: Pointer to array of commands and arguments
  * @argNum: Number of arguments
  * @str: command string
  */
@@ -39,7 +39,7 @@ void arr_cmd_size(char ***ptrCmd, int argNum, char *str)
 	tmp = strtok(s1, " ");
 	for (index = 0; index < argNum - 1; index++, tmp != NULL)
 	{
-		*((*ptrCmd) + index) = malloc(sizeof(char) * (_strlen(temp) + 1));
+		*((*ptrCmd) + index) = malloc(sizeof(char) * (_strlen(tmp) + 1));
 		if (*((*ptrCmd) + index) == NULL)
 		{
 			while (index > -1)
@@ -48,10 +48,12 @@ void arr_cmd_size(char ***ptrCmd, int argNum, char *str)
 				free((*ptrCmd)[index]);
 			}
 			free(*ptrCmd);
-			return (NULL);
+			return;
 		}
 		tmp = strtok(NULL, " ");
 	}
+	free(s1);
+	s1 = NULL;
 }
 
 
@@ -71,25 +73,7 @@ char **get_cmd(char *cmd_ptr)
 	arr = (char **)malloc(sizeof(char *) * len);
 	if (arr == NULL)
 		return (NULL);
-	temp = strtok(s, " ");
-	for (index = 0; index < len - 1; index++, temp != NULL)
-	{
-		*(arr + index) = malloc(sizeof(char) * (_strlen(temp) + 1));
-		if ((*(arr + index)) == NULL)
-		{
-			while (index > -1)
-			{
-				index--;
-				free(arr[index]);
-			}
-			free(arr);
-			return (NULL);
-		}
-		temp = strtok(NULL, " ");
-	}
-	free(s);
-	s = NULL;
-	s = _strdup(cmd_ptr);
+	arr_cmd_size(&arr, len, cmd_ptr);
 	temp = strtok(s, " ");
 	for (index = 0; index < len - 1; index++, temp != NULL)
 	{
