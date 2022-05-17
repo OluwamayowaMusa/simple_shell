@@ -9,7 +9,7 @@
  */
 int main(int argc, char *argv[])
 {
-	char *cmd = NULL, **arr_cmd;
+	char *cmd = NULL;
 	ssize_t res;
 	size_t cmdlen = 0;
 	int active = 1, index;
@@ -30,9 +30,7 @@ int main(int argc, char *argv[])
 				write(STDERR_FILENO, "\n", 1);
 				exit(2);
 			}
-			arr_cmd = get_cmd(cmd);
-			_execute(arr_cmd);
-			free_arrcmd(arr_cmd);
+			parse_exec_free(cmd);
 			free(cmd);
 			cmd = NULL;
 		}
@@ -45,9 +43,7 @@ int main(int argc, char *argv[])
 			perror(cmd);
 			exit(4);
 		}
-		arr_cmd = get_cmd(cmd);
-		_execute(arr_cmd);
-		free_arrcmd(arr_cmd);
+		parse_exec_free(cmd);
 	}
 
 	free(cmd);
