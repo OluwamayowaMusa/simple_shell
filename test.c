@@ -1,8 +1,7 @@
-#include <stdio.h>
-#include <unistd.h>
+#include "shell.h"
 
 /**
- * main - executing commands
+ * main - test function
  *
  * Return: 0
  */
@@ -12,9 +11,6 @@ int main(void)
 
 	printf("Before execve\n");
 	if (execve(argv[0], argv, NULL) == -1)
-	{
-		perror("ERROR:");
-	}
-	printf("After Execve\n");
-	return (0);
+			perror(argv[0]);
+	printf("After execve\n");
 }
