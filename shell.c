@@ -30,6 +30,8 @@ int main(int argc, char *argv[])
 				write(STDERR_FILENO, "\n", 1);
 				exit(2);
 			}
+			if (cmd[0] == 10)
+				continue;
 			parse_exec_free(cmd);
 			free(cmd);
 			cmd = NULL;
