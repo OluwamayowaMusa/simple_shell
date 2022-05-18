@@ -31,23 +31,30 @@ void path_array(char **ptr_env, char ***arr)
 /**
  * check_file_exe - Check if file exist and is executable
  * @str: File path
+ * @ptr_array: Pointer to array
  *
  * Return: 1 - If found and executable
  *         2 - if found only
  *        -1 - Otherwise
  */
-int check_file_exe(char *str)
+int check_file_exe(char *str, char **ptr_array)
 {
 	int f_exist, f_exe;
 
-	f_exist = access(str, F_0K);
+	f_exist = access(str, F_OK);
 	if (f_exist == 0)
 	{
 		f_exe = access(str, X_OK);
 		if (f_exe == 0)
+		{
+			free_arrcmd(ptr_array);
 			return (1);
+		}
+		free_arrcmd(ptr_array);
+		free(str);
 		return (2);
 	}
+	free(str);
 	return (-1);
 }
 
@@ -63,7 +70,7 @@ int check_file_exe(char *str)
 char *env_check(char **envPtr, char *cmd)
 {
 	char **path_arr = NULL, *temp = NULL, *path = NULL;
-	int index, dirLen, cmdLen, f_exist, f_exe, inx = 0;
+	int index, dirLen, cmdLen, control, inx = 0;
 
 	path_array(envPtr, &path_arr);
 	temp = strtok(cmd, " ");
@@ -87,21 +94,13 @@ char *env_check(char **envPtr, char *cmd)
 			inx++;
 		}
 		path[inx + dirLen + 1] = '\0';
-		f_exist = access(path, F_OK);
-		if (f_exist == 0)
-		{
-			f_exe = access(path, X_OK);
-			if (f_exe == 0)
-			{
-				free_arrcmd(path_arr);
-				return (path);
-			}
-			free_arrcmd(path_arr);
-			free(path);
+		control = check_file_exe(path, path_arr);
+		if (control == 1)
+			return (path);
+		else if (control == 2)
 			return ("NOT EXECUTABLE");
-		}
-		free(path);
-		path = NULL;
+		else if (control == -1)
+			path = NULL;
 	}
 	free_arrcmd(path_arr);
 	return (NULL);

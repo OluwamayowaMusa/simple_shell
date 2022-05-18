@@ -29,5 +29,6 @@ char *env_check(char **envPtr, char *cmd);
 void path_arr(char **ptr_env, char ***arr);
 void _execute_path(char *path, char **ar_cmd, char *ptr, char **env);
 int check_newline(char *cmd);
+int check_file_exe(char *str, char **ptr_array);
 
 #endif

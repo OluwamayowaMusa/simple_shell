@@ -13,11 +13,10 @@ int main(int __attribute__((unused)) argc, char *argv[], char *envp[])
 	char *cmd = NULL, *prg = argv[0];
 	ssize_t res;
 	size_t cmdlen = 0;
-	int active = 1;
 
 	if (isatty(STDIN_FILENO))
 	{
-		while (active)
+		while (1)
 		{
 			if (write(STDOUT_FILENO, "my_shell$ ", 10) == -1)
 			{
@@ -47,9 +46,8 @@ int main(int __attribute__((unused)) argc, char *argv[], char *envp[])
 			exit(4);
 		}
 		parse_exec_free(cmd, prg, envp);
+		free(cmd);
+		cmd = NULL;
 	}
-
-	free(cmd);
-	cmd = NULL;
 	return (0);
 }
