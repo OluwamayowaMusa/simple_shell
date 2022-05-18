@@ -28,9 +28,7 @@ void parse_exec_free(char *cmd, char *ptr, char **env)
 		{
 			free(s);
 			write(STDERR_FILENO, ptr, _strlen(ptr));
-			write(STDERR_FILENO, ": ", 2);
-			write(STDERR_FILENO, cmd, _strlen(cmd));
-			write(STDERR_FILENO, ": not found\n", 13);
+			write(STDERR_FILENO, ": No such file or directory\n", 28);
 			return;
 		}
 		if (_strcmp1(path_cmd, "NOT EXECUTABLE") == 0)
