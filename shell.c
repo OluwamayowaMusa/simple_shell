@@ -4,12 +4,13 @@
  * main - Making a simple shell
  * @argc: Argument count
  * @argv: Argument Vector
+ * @envp: Environment variables
  *
  * Return: 0
  */
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char *envp[])
 {
-	char *cmd = NULL;
+	char *cmd = NULL, *prg = argv[0];
 	ssize_t res;
 	size_t cmdlen = 0;
 	int active = 1, index;
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
 			}
 			if (cmd[0] == 10)
 				continue;
-			parse_exec_free(cmd);
+			parse_exec_free(cmd, prg, envp);
 			free(cmd);
 			cmd = NULL;
 		}
@@ -45,7 +46,7 @@ int main(int argc, char *argv[])
 			perror(cmd);
 			exit(4);
 		}
-		parse_exec_free(cmd);
+		parse_exec_free(cmd, prg);
 	}
 
 	free(cmd);
