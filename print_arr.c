@@ -9,6 +9,7 @@ void print_arr(char **ptr)
 	int i;
 
 	for (i = 0; ptr[i]; i++)
-		printf("%s\n", ptr[i]);
+		printf(">>>%s ", ptr[i]);
+	putchar(10);
 
 }

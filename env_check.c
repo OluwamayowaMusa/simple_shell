@@ -1,24 +1,55 @@
 #include "shell.h"
 
 /**
- * path_arr - Get arrays of path
+ * path_array - Get arrays of path
  * @ptr_env: Pointer to environment variable
+ * @arr: Pointer to array of path
+ *
  */
-void path_arr(char **ptr_env, char ***arr)
+void path_array(char **ptr_env, char ***arr)
 {
+	char *str, *tmp;
 	int index, res;
 
 	for (index = 0; ptr_env[index]; index++)
 	{
-		res = _strcmp(&ptr_env[index], "PATH");
+		res = _strcmp(ptr_env[index], "PATH");
 		if (res == 0)
 			break;
 	}
-	*arr = get_path(ptr_env[index]);
+	str = _strdup(ptr_env[index]);
+	tmp = strtok(str, "=");
+	tmp = strtok(NULL, "=");
+	(*arr) = get_path(tmp);
 	if ((*arr) == NULL)
 		return;
+	free(str);
+	str = NULL;
 }
 
+
+/**
+ * check_file_exe - Check if file exist and is executable
+ * @str: File path
+ *
+ * Return: 1 - If found and executable
+ *         2 - if found only
+ *        -1 - Otherwise
+ */
+int check_file_exe(char *str)
+{
+	int f_exist, f_exe;
+
+	f_exist = access(str, F_0K);
+	if (f_exist == 0)
+	{
+		f_exe = access(str, X_OK);
+		if (f_exe == 0)
+			return (1);
+		return (2);
+	}
+	return (-1);
+}
 
 
 /**
@@ -31,28 +62,18 @@ void path_arr(char **ptr_env, char ***arr)
  */
 char *env_check(char **envPtr, char *cmd)
 {
-	char **path_arr, *temp, *str, *path;
-	int res, index, dirLen, cmdLen, f_exist, f_exe, inx;
+	char **path_arr = NULL, *temp = NULL, *path = NULL;
+	int index, dirLen, cmdLen, f_exist, f_exe, inx = 0;
 
-	for (index = 0; envPtr[index]; index++)
-	{
-		res = _strcmp(&envPtr[index], "PATH");
-		if (res == 0)
-			break;
-	}
-	path_arr = get_path(envPtr[index]);
-	if (path_arr == NULL)
-		return (NULL);
-	str = _strdup(cmd);
-	temp = strtok(str, " ");
+	path_array(envPtr, &path_arr);
+	temp = strtok(cmd, " ");
 	cmdLen = _strlen(temp);
-	for (index = 0; path_arr[index]; index++)
+	for (index = 0; path_arr[index]; index++, inx = 0)
 	{
 		dirLen = _strlen(path_arr[index]);
 		path = malloc(sizeof(char) * (dirLen + cmdLen + 2));
 		if (path == NULL)
 			return (NULL);
-		inx = 0;
 		while (inx < dirLen)
 		{
 			path[inx] = path_arr[index][inx];
@@ -66,20 +87,22 @@ char *env_check(char **envPtr, char *cmd)
 			inx++;
 		}
 		path[inx + dirLen + 1] = '\0';
-		printf("%s\n", path);
 		f_exist = access(path, F_OK);
 		if (f_exist == 0)
 		{
 			f_exe = access(path, X_OK);
 			if (f_exe == 0)
+			{
+				free_arrcmd(path_arr);
 				return (path);
+			}
+			free_arrcmd(path_arr);
 			free(path);
 			return ("NOT EXECUTABLE");
 		}
 		free(path);
 		path = NULL;
 	}
-	free(str);
-	str = NULL;
+	free_arrcmd(path_arr);
 	return (NULL);
 }

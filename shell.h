@@ -20,10 +20,14 @@ void _execute(char **arr_cmd, char *ptr, char **env);
 void free_arrcmd(char **arrCmd);
 void arr_cmd_size(char ***ptrCmd, int argNum, char *str);
 void parse_exec_free(char *cmd, char *ptr, char **env);
-int _strcmp(char **s1, char *s2);
+int _strcmp(char *s1, char *s2);
+int _strcmp1(char *s1, char *s2);
 char **get_path(char *cmd_ptr);
 void arr_path_size(char ***ptrCmd, int argNum, char *str);
 int no_arg_path(char *str, char *delim);
 char *env_check(char **envPtr, char *cmd);
+void path_arr(char **ptr_env, char ***arr);
+void _execute_path(char *path, char **ar_cmd, char *ptr, char **env);
+int check_newline(char *cmd);
 
 #endif

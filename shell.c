@@ -8,12 +8,12 @@
  *
  * Return: 0
  */
-int main(int argc, char *argv[], char *envp[])
+int main(int __attribute__((unused)) argc, char *argv[], char *envp[])
 {
 	char *cmd = NULL, *prg = argv[0];
 	ssize_t res;
 	size_t cmdlen = 0;
-	int active = 1, index;
+	int active = 1;
 
 	if (isatty(STDIN_FILENO))
 	{
@@ -31,7 +31,7 @@ int main(int argc, char *argv[], char *envp[])
 				write(STDERR_FILENO, "\n", 1);
 				exit(2);
 			}
-			if (cmd[0] == 10)
+			if (check_newline(cmd) == 1)
 				continue;
 			parse_exec_free(cmd, prg, envp);
 			free(cmd);
@@ -46,7 +46,7 @@ int main(int argc, char *argv[], char *envp[])
 			perror(cmd);
 			exit(4);
 		}
-		parse_exec_free(cmd, prg);
+		parse_exec_free(cmd, prg, envp);
 	}
 
 	free(cmd);
