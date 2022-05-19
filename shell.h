@@ -13,7 +13,7 @@
 /* Function Prototypes */
 int _strlen(char *s);
 char *_strdup(char *str);
-void print_arr(char **ptr);
+void print_env(char **ptr, char *str, int *ptr_err);
 char **get_cmd(char *cmd_ptr);
 int no_arg(char *str, char *delim);
 void _execute(char **arr_cmd, char *ptr, char **env, int *ptr_num);
@@ -40,5 +40,6 @@ void exit_err(char *name, char *cmd, int *ptr_err);
 void cmd_error(char *name, char *cmd, int *ptr_err);
 int _putchar(char c);
 void print_number(int num);
+int envCmd(char *cmd);
 
 #endif

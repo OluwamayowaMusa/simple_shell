@@ -44,6 +44,11 @@ int main(int __attribute__((unused)) argc, char *argv[], char *envp[])
 				free(cmdLine);
 				continue;
 			}
+			if (envCmd(cmdLine) == 1)
+			{
+				print_env(envp, cmdLine, &err_count);
+				continue;
+			}
 			parse_exec_free(cmdLine, prg, envp, &err_count);
 			free(cmdLine);
 			cmdLine = NULL;

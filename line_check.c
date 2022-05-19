@@ -17,6 +17,7 @@ int check_newline(char *cmd, int *ptr)
 	if (temp[0] == 10)
 	{
 		free(s);
+		free(cmd);
 		(*ptr)++;
 		return (1);
 	}
@@ -49,7 +50,10 @@ int exit_check(char *cmd)
 	{
 		res = temp[index] - str[index];
 		if (res != 0)
+		{
+			free(s);
 			return (0);
+		}
 	}
 	free(s);
 	return (1);
@@ -80,4 +84,21 @@ char *rmv_newline(char *s)
 	free(s);
 	s = NULL;
 	return (str);
+}
+
+/**
+ * envCmd - Check if the command env is entered
+ * @cmd: Command passed
+ *
+ * Return: 1 - If true
+ *         0 - otherwise
+ */
+int envCmd(char *cmd)
+{
+	int res;
+
+	res = _strcmp1(cmd, "env");
+	if (res == 0)
+		return (1);
+	return (0);
 }
