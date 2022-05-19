@@ -81,10 +81,6 @@ char **get_cmd(char *cmd_ptr)
 		{
 			*(*(arr + index) + index2) = temp[index2];
 		}
-		if (index == len - 2)
-		{
-			*(*(arr + index) + index2 - 1) = '\0';
-		}
 		*(*(arr + index) + index2) = '\0';
 		temp = strtok(NULL, " ");
 	}

@@ -3,11 +3,14 @@
 /**
  * _execute_path - Execute commands gotten from path
  * @path: Path
- * @ar_cmd: Array of arguments
+ * @arCmd: Array of arguments
  * @ptr: Name of program
  * @env: Environment variables
+ * @ptr_num: Pointer to error count
+ *
  */
-void _execute_path(char *path, char **ar_cmd, char *ptr, char **env)
+void _execute_path(char *path, char **arCmd, char __attribute__((unused)) *ptr,
+		char **env, int *ptr_num)
 {
 	pid_t id;
 
@@ -19,11 +22,14 @@ void _execute_path(char *path, char **ar_cmd, char *ptr, char **env)
 	}
 	if (id == 0)
 	{
-		if (execve(path, ar_cmd, env) == -1)
-			perror(ptr);
+		if (execve(path, arCmd, env) == -1)
+		{
+			perror(arCmd[0]);
+		}
 	}
 	else
 	{
 		wait(NULL);
+		(*ptr_num)++;
 	}
 }

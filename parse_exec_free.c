@@ -5,9 +5,10 @@
  * @cmd: Commad passed
  * @ptr: Name of program
  * @env: Environment variables
+ * @ptr_num: Pointer to error count
  *
  */
-void parse_exec_free(char *cmd, char *ptr, char **env)
+void parse_exec_free(char *cmd, char *ptr, char **env, int *ptr_num)
 {
 	char **arr_cmd, *path_cmd, *s, *temp;
 
@@ -16,7 +17,7 @@ void parse_exec_free(char *cmd, char *ptr, char **env)
 	if (temp[0] == '/')
 	{
 		arr_cmd = get_cmd(cmd);
-		_execute(arr_cmd, ptr, env);
+		_execute(arr_cmd, ptr, env, ptr_num);
 		free_arrcmd(arr_cmd);
 		free(s);
 	}
@@ -26,9 +27,10 @@ void parse_exec_free(char *cmd, char *ptr, char **env)
 		path_cmd = env_check(env, arr_cmd[0]);
 		if (path_cmd == NULL)
 		{
+			(*ptr_num)++;
 			free(s);
-			write(STDERR_FILENO, ptr, _strlen(ptr));
-			write(STDERR_FILENO, ": No such file or directory\n", 28);
+			cmd_error(ptr, arr_cmd[0], ptr_num);
+			free_arrcmd(arr_cmd);
 			return;
 		}
 		if (_strcmp1(path_cmd, "NOT EXECUTABLE") == 0)
@@ -40,7 +42,7 @@ void parse_exec_free(char *cmd, char *ptr, char **env)
 			write(STDERR_FILENO, ": Permission denied\n", 20);
 			return;
 		}
-		_execute_path(path_cmd, arr_cmd, ptr, env);
+		_execute_path(path_cmd, arr_cmd, ptr, env, ptr_num);
 		free_arrcmd(arr_cmd);
 		free(path_cmd);
 		free(s);
