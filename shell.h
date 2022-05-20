@@ -31,6 +31,7 @@ void _execute_path(char *path, char **ar_cmd, char *ptr,
 		char **env, int *ptr_num);
 int check_newline(char *cmd, int *ptr);
 int check_file_exe(char *str, char **ptr_array);
+int check_file_exe1(char *str);
 int exit_check(char *cmd);
 int _atoi(char *s);
 int _isdigit(char c);
@@ -38,6 +39,7 @@ int exit_shell(char *cmd);
 char *rmv_newline(char *s);
 void exit_err(char *name, char *cmd, int *ptr_err);
 void cmd_error(char *name, char *cmd, int *ptr_err);
+void access_err(char *ptr, char *cmd);
 int _putchar(char c);
 void print_number(int num);
 int envCmd(char *cmd);

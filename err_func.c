@@ -10,6 +10,7 @@ void cmd_error(char *name, char *cmd, int *ptr_err)
 {
 	ssize_t charWritten;
 
+	(*ptr_err)++;
 	charWritten = write(STDERR_FILENO, name, _strlen(name) + 1);
 	if (charWritten == -1)
 		return;
@@ -59,4 +60,28 @@ void exit_err(char *name, char *cmd, int *ptr_err)
 	if (charWritten == -1)
 		return;
 	_putchar('\n');
+}
+
+/**
+ * access_err - Access file error
+ * @ptr: Name of program
+ * @cmd: Command passed
+ *
+ */
+void access_err(char *ptr, char *cmd)
+{
+	ssize_t charWritten;
+
+	charWritten = write(STDERR_FILENO, ptr, _strlen(ptr));
+	if (charWritten == -1)
+		return;
+	charWritten = write(STDERR_FILENO, ": ", 2);
+	if (charWritten == -1)
+		return;
+	charWritten = write(STDERR_FILENO, cmd, _strlen(cmd));
+	if (charWritten == -1)
+		return;
+	charWritten = write(STDERR_FILENO, ": Permission denied\n", 20);
+	if (charWritten == -1)
+		return;
 }

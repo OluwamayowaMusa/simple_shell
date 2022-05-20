@@ -11,13 +11,20 @@
 void parse_exec_free(char *cmd, char *ptr, char **env, int *ptr_num)
 {
 	char **arr_cmd, *path_cmd, *s, *temp;
+	int ctrl;
 
 	s = _strdup(cmd);
 	temp = strtok(s, " ");
 	if (temp[0] == '/')
 	{
 		arr_cmd = get_cmd(cmd);
-		_execute(arr_cmd, ptr, env, ptr_num);
+		ctrl = check_file_exe1(arr_cmd[0]);
+		if (ctrl == 1)
+			_execute(arr_cmd, ptr, env, ptr_num);
+		else if (ctrl == 2)
+			access_err(ptr, arr_cmd[0]);
+		else if (ctrl == -1)
+			cmd_error(ptr, arr_cmd[0], ptr_num);
 		free_arrcmd(arr_cmd);
 		free(s);
 	}
@@ -27,24 +34,18 @@ void parse_exec_free(char *cmd, char *ptr, char **env, int *ptr_num)
 		path_cmd = env_check(env, arr_cmd[0]);
 		if (path_cmd == NULL)
 		{
-			(*ptr_num)++;
-			free(s);
 			cmd_error(ptr, arr_cmd[0], ptr_num);
-			free_arrcmd(arr_cmd);
-			return;
 		}
-		if (_strcmp1(path_cmd, "NOT EXECUTABLE") == 0)
+		else if (_strcmp1(path_cmd, "NOT EXECUTABLE") == 0)
 		{
-			free(s);
-			write(STDERR_FILENO, ptr, _strlen(ptr));
-			write(STDERR_FILENO, ": ", 2);
-			write(STDERR_FILENO, cmd, _strlen(cmd));
-			write(STDERR_FILENO, ": Permission denied\n", 20);
-			return;
+			access_err(ptr, arr_cmd[0]);
 		}
-		_execute_path(path_cmd, arr_cmd, ptr, env, ptr_num);
+		else
+		{
+			_execute_path(path_cmd, arr_cmd, ptr, env, ptr_num);
+			free(path_cmd);
+		}
 		free_arrcmd(arr_cmd);
-		free(path_cmd);
 		free(s);
 	}
 	s = NULL;

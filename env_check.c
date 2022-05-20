@@ -27,6 +27,30 @@ void path_array(char **ptr_env, char ***arr)
 	str = NULL;
 }
 
+/**
+ * check_file_exe1 -Check if file exit and is executable(file path passed)
+ * @str: File Path
+ *
+ * Return: 1 - If found and executable
+ *         2 - If found only
+ *        -1 - Otherwise
+ */
+int check_file_exe1(char *str)
+{
+	int f_exist, f_exe;
+
+	f_exist = access(str, F_OK);
+	if (f_exist == 0)
+	{
+		f_exe = access(str, X_OK);
+		if (f_exe == 0)
+		{
+			return (1);
+		}
+		return (2);
+	}
+	return (-1);
+}
 
 /**
  * check_file_exe - Check if file exist and is executable
