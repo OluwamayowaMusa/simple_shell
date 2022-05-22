@@ -43,5 +43,6 @@ void access_err(char *ptr, char *cmd);
 int _putchar(char c);
 void print_number(int num);
 int envCmd(char *cmd);
+char *_memcpy(char *dest, char *src, unsigned int n);
 
 #endif

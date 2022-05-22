@@ -13,6 +13,9 @@ void print_env(char **ptr, char *str, int *ptr_err)
 
 	(*ptr_err)++;
 	for (i = 0; ptr[i]; i++)
-		printf("%s\n", ptr[i]);
+	{
+		write(STDOUT_FILENO, ptr[i], _strlen(ptr[i]));
+		write(STDOUT_FILENO, "\n", 1);
+	}
 	free(str);
 }
