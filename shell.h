@@ -10,6 +10,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+extern char **environ;
+
 /* Function Prototypes */
 int _strlen(char *s);
 char *_strdup(char *str);
@@ -44,5 +46,13 @@ int _putchar(char c);
 void print_number(int num);
 int envCmd(char *cmd);
 char *_memcpy(char *dest, char *src, unsigned int n);
+int _setenv(char *cmd, int *ptr_err);
+char *_strcat(char *s1, char *s2);
+char *_strcpy(char *s1, char *s2);
+int check_setenv(char *cmd);
+char **_get_env(char *s);
+char **_copyenv(void);
+void copy_env(char **ptr_env);
+void print_arr(char **arr);
 
 #endif

@@ -62,3 +62,38 @@ char *_memcpy(char *dest, char *src, unsigned int n)
 		dest[i] = src[i];
 	return (ptr);
 }
+
+/**
+ * _strcat - Concantenate string
+ * @s1: First string
+ * @s2: Second string
+ *
+ * Return: Pointer to concatenated string
+ */
+char *_strcat(char *s1, char *s2)
+{
+	int len = _strlen(s1), i;
+	char *str = s1;
+
+	for (i = 0; s2[i]; i++)
+		s1[len + i] = s2[i];
+	s1[len + i] = '\0';
+	return (str);
+}
+
+/**
+ * _strcpy - Copy string 
+ * @s1: First string
+ * @s2: Seconde string
+ *
+ * Return: Pointer to copied string
+ */
+char *_strcpy(char *s1, char *s2)
+{
+	int i;
+
+	for (i = 0; s2[i]; i++)
+		s1[i] = s2[i];
+	s1[i] = '\0';
+	return (s1);
+}

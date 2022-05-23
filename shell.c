@@ -8,13 +8,14 @@
  *
  * Return: 0
  */
-int main(int __attribute__((unused)) argc, char *argv[], char *envp[])
+int main(int __attribute__((unused)) argc, char *argv[])
 {
 	char *cmd = NULL, *prg = argv[0], *cmdLine;/*Without Newline*/
 	ssize_t res;
 	size_t cmdlen = 0;
 	int ctrl, err_count = 0;
 
+	environ = _copyenv();
 	if (isatty(STDIN_FILENO))
 	{
 		while (1)
@@ -46,10 +47,19 @@ int main(int __attribute__((unused)) argc, char *argv[], char *envp[])
 			}
 			if (envCmd(cmdLine) == 1)
 			{
-				print_env(envp, cmdLine, &err_count);
+				print_env(environ, cmdLine, &err_count);
 				continue;
 			}
-			parse_exec_free(cmdLine, prg, envp, &err_count);
+			if (check_setenv(cmdLine) == 1)
+			{
+				ctrl = _setenv(cmdLine, &err_count);
+				if (ctrl == 0)
+					printf("Good\n");
+				if (ctrl == -1)
+					printf("Error\n");
+				continue;
+			}
+			parse_exec_free(cmdLine, prg, environ, &err_count);
 			free(cmdLine);
 			cmdLine = NULL;
 		}
@@ -63,7 +73,7 @@ int main(int __attribute__((unused)) argc, char *argv[], char *envp[])
 			exit(4);
 		}
 		cmdLine = rmv_newline(cmd);
-		parse_exec_free(cmdLine, prg, envp, &err_count);
+		parse_exec_free(cmdLine, prg, environ, &err_count);
 		free(cmdLine);
 		cmdLine = NULL;
 	}

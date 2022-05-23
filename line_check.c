@@ -95,10 +95,64 @@ char *rmv_newline(char *s)
  */
 int envCmd(char *cmd)
 {
-	int res;
+	char *str, *temp, *s = "env";
+	int res, index, len, len1;
 
-	res = _strcmp1(cmd, "env");
-	if (res == 0)
-		return (1);
-	return (0);
+	str = _strdup(cmd);
+	temp = strtok(str, " ");
+	len = _strlen(temp);
+	len1 = _strlen(s);
+	if (len1 != len)
+	{
+		free(str);
+		return (0);
+	}
+	for (index = 0; index < len && s[index]; index++)
+	{
+		res = temp[index] - s[index];
+		if (res != 0)
+		{
+			free(str);
+			return (0);
+		}
+	}
+	free(str);
+	str = NULL;
+	return (1);
+}
+
+
+/**
+ * check_setenv - Check setenv command
+ * @cmd: Command passed
+ *
+ * Return: 1 - If setenv is paased
+ *         0 - Otherwise
+ */
+int check_setenv(char *cmd)
+{
+	char *str, *temp, *s = "setenv";
+	int index, len, len1, res;
+
+	str = _strdup(cmd);
+	temp = strtok(str, " ");
+	len = _strlen(temp);
+	len1 = _strlen(s);
+	if (len1 != len)
+	{
+		free(str);
+		return (0);
+	}
+	for (index = 0; index < len && s[index]; index++)
+	{
+		res = temp[index] - s[index];
+		if (res != 0)
+		{
+			free(str);
+			return (0);
+		}
+	}
+	free(str);
+	str = NULL;
+	return (1);
 }
