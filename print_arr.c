@@ -2,7 +2,7 @@
 
 /**
  * print_arr - Print array
- * @arr: Array 
+ * @arr: Array
  *
  */
 void print_arr(char **arr)

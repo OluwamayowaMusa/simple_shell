@@ -25,39 +25,6 @@ int check_newline(char *cmd, int *ptr)
 	return (0);
 }
 
-/**
- * exit_check - Check for exit
- * @cmd: Command entered
- *
- * Return: 1 - if exit found
- *         0 - otherwise
- */
-int exit_check(char *cmd)
-{
-	char *s, *temp, *str = "exit";
-	int len, index, res, len1;
-
-	s = _strdup(cmd);
-	temp = strtok(s, " ");
-	len = _strlen(temp);
-	len1 = _strlen(str);
-	if (len1 != len)
-	{
-		free(s);
-		return (0);
-	}
-	for (index = 0; index < len && str[index]; index++)
-	{
-		res = temp[index] - str[index];
-		if (res != 0)
-		{
-			free(s);
-			return (0);
-		}
-	}
-	free(s);
-	return (1);
-}
 
 /**
  * rmv_newline - Remove newline
@@ -86,73 +53,39 @@ char *rmv_newline(char *s)
 	return (str);
 }
 
+
 /**
- * envCmd - Check if the command env is entered
+ * builtin_check - Check for built-in function
  * @cmd: Command passed
+ * @str: Bulitin function
  *
- * Return: 1 - If true
+ * Return: 1 - If built in is passed
  *         0 - otherwise
  */
-int envCmd(char *cmd)
+int builtin_check(char *cmd, char *str)
 {
-	char *str, *temp, *s = "env";
-	int res, index, len, len1;
-
-	str = _strdup(cmd);
-	temp = strtok(str, " ");
-	len = _strlen(temp);
-	len1 = _strlen(s);
-	if (len1 != len)
-	{
-		free(str);
-		return (0);
-	}
-	for (index = 0; index < len && s[index]; index++)
-	{
-		res = temp[index] - s[index];
-		if (res != 0)
-		{
-			free(str);
-			return (0);
-		}
-	}
-	free(str);
-	str = NULL;
-	return (1);
-}
-
-
-/**
- * check_setenv - Check setenv command
- * @cmd: Command passed
- *
- * Return: 1 - If setenv is paased
- *         0 - Otherwise
- */
-int check_setenv(char *cmd)
-{
-	char *str, *temp, *s = "setenv";
+	char *s, *temp;
 	int index, len, len1, res;
 
-	str = _strdup(cmd);
-	temp = strtok(str, " ");
+	s = _strdup(cmd);
+	temp = strtok(s, " ");
 	len = _strlen(temp);
-	len1 = _strlen(s);
+	len1 = _strlen(str);
 	if (len1 != len)
 	{
-		free(str);
+		free(s);
 		return (0);
 	}
-	for (index = 0; index < len && s[index]; index++)
+	for (index = 0; index < len && str[index]; index++)
 	{
-		res = temp[index] - s[index];
+		res = temp[index] - str[index];
 		if (res != 0)
 		{
-			free(str);
+			free(s);
 			return (0);
 		}
 	}
-	free(str);
-	str = NULL;
+	free(s);
+	s = NULL;
 	return (1);
 }

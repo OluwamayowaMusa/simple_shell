@@ -82,7 +82,7 @@ char *_strcat(char *s1, char *s2)
 }
 
 /**
- * _strcpy - Copy string 
+ * _strcpy - Copy string
  * @s1: First string
  * @s2: Seconde string
  *

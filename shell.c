@@ -4,7 +4,6 @@
  * main - Making a simple shell
  * @argc: Argument count
  * @argv: Argument Vector
- * @envp: Environment variables
  *
  * Return: 0
  */
@@ -38,7 +37,7 @@ int main(int __attribute__((unused)) argc, char *argv[])
 			if (check_newline(cmd, &err_count) == 1)
 				continue;
 			cmdLine = rmv_newline(cmd);
-			if (exit_check(cmdLine) == 1)
+			if (builtin_check(cmdLine, "exit") == 1)
 			{
 				ctrl = exit_shell(cmdLine);
 				if (ctrl == -1)
@@ -46,18 +45,24 @@ int main(int __attribute__((unused)) argc, char *argv[])
 				free(cmdLine);
 				continue;
 			}
-			if (envCmd(cmdLine) == 1)
+			if (builtin_check(cmdLine, "env") == 1)
 			{
 				print_env(environ, cmdLine, &err_count);
 				continue;
 			}
-			if (check_setenv(cmdLine) == 1)
+			if (builtin_check(cmdLine, "setenv") == 1)
 			{
 				ctrl = _setenv(cmdLine, &err_count);
-				if (ctrl == 0)
-					printf("Good\n");
 				if (ctrl == -1)
-					printf("Error\n");
+					write(STDERR_FILENO, "Unable to set enviroment variable\n", 34);
+				free(cmdLine);
+				continue;
+			}
+			if (builtin_check(cmdLine, "unsetenv") == 1)
+			{
+				ctrl = _unsetenv(cmdLine, &err_count);
+				if (ctrl == -1)
+					write(STDERR_FILENO, "Unable to remove environment variable\n", 39);
 				free(cmdLine);
 				continue;
 			}

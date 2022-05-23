@@ -34,7 +34,6 @@ void _execute_path(char *path, char **ar_cmd, char *ptr,
 int check_newline(char *cmd, int *ptr);
 int check_file_exe(char *str, char **ptr_array);
 int check_file_exe1(char *str);
-int exit_check(char *cmd);
 int _atoi(char *s);
 int _isdigit(char c);
 int exit_shell(char *cmd);
@@ -44,15 +43,16 @@ void cmd_error(char *name, char *cmd, int *ptr_err);
 void access_err(char *ptr, char *cmd);
 int _putchar(char c);
 void print_number(int num);
-int envCmd(char *cmd);
 char *_memcpy(char *dest, char *src, unsigned int n);
 int _setenv(char *cmd, int *ptr_err);
+int _unsetenv(char *cmd, int *ptr_err);
 char *_strcat(char *s1, char *s2);
 char *_strcpy(char *s1, char *s2);
-int check_setenv(char *cmd);
 char **_get_env(char *s);
 char **_copyenv(void);
 void copy_env(char **ptr_env);
 void print_arr(char **arr);
+int builtin_check(char *cmd, char *str);
+void arrange_env(char **ptr);
 
 #endif
