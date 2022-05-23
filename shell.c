@@ -50,16 +50,21 @@ int main(int __attribute__((unused)) argc, char *argv[])
 			all_err(cmd, 4);
 		}
 		if (check_newline(cmd, &err_count) == 1)
+		{
+			free_arrcmd(environ);
 			return (0);
+		}
 		cmdLine = rmv_newline(cmd);
 		if (builtin_func(cmdLine, &err_count, prg) == 1)
 		{
 			free(cmdLine);
+			free_arrcmd(environ);
 			return (0);
 		}
 		parse_exec_free(cmdLine, prg, environ, &err_count);
 		free(cmdLine);
 		cmdLine = NULL;
 	}
+	free_arrcmd(environ);
 	return (0);
 }
