@@ -3,11 +3,10 @@
 /**
  * print_env - Print Environment variables
  * @ptr: pointer to environment variables
- * @str: Command passed
  * @ptr_err: Pointer to error count
  *
  */
-void print_env(char **ptr, char *str, int *ptr_err)
+void print_env(char **ptr, int *ptr_err)
 {
 	int i;
 
@@ -17,7 +16,6 @@ void print_env(char **ptr, char *str, int *ptr_err)
 		write(STDOUT_FILENO, ptr[i], _strlen(ptr[i]));
 		write(STDOUT_FILENO, "\n", 1);
 	}
-	free(str);
 }
 
 /**

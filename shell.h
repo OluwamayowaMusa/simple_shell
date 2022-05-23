@@ -15,7 +15,7 @@ extern char **environ;
 /* Function Prototypes */
 int _strlen(char *s);
 char *_strdup(char *str);
-void print_env(char **ptr, char *str, int *ptr_err);
+void print_env(char **ptr, int *ptr_err);
 char **get_cmd(char *cmd_ptr);
 int no_arg(char *str, char *delim);
 void _execute(char **arr_cmd, char *ptr, char **env, int *ptr_num);
@@ -54,5 +54,7 @@ void copy_env(char **ptr_env);
 void print_arr(char **arr);
 int builtin_check(char *cmd, char *str);
 void arrange_env(char **ptr);
+int builtin_func(char *cmd, int *ptr_err, char *prg);
+void all_err(char *cmd, int status);
 
 #endif

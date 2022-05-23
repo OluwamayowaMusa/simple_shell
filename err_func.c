@@ -85,3 +85,27 @@ void access_err(char *ptr, char *cmd)
 	if (charWritten == -1)
 		return;
 }
+
+
+
+/**
+ * all_err - Handles all error
+ * @cmd: Command passed
+ * @status: Exit status
+ *
+ */
+void all_err(char *cmd, int status)
+{
+	if (status == 1)
+	{
+		write(STDERR_FILENO, "Couldn't write\n", 15);
+		exit(status);
+	}
+	if (status == 2)
+	{
+		free(cmd);
+		free_arrcmd(environ);
+		write(STDERR_FILENO, "\n", 1);
+		exit(status);
+	}
+}

@@ -10,7 +10,8 @@
 int exit_shell(char *cmd)
 {
 	char *s, *temp;
-	int index, num, control;
+	int num;
+	int index, control;
 
 	s = _strdup(cmd);
 	temp = strtok(s, " ");
