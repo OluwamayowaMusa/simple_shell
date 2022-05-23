@@ -38,8 +38,8 @@ int _setenv(char *cmd, int *ptr_err)
 	cmd_arg = get_cmd(cmd);
 	if (cmd_arg == NULL)
 		return (-1);
-	new_value = malloc(sizeof(char) *(_strlen(cmd_arg[1]
-						+ _strlen(cmd_arg[2]) + 2)));
+	new_value = malloc(sizeof(char) * (_strlen(cmd_arg[1])
+						+ _strlen(cmd_arg[2]) + 2));
 	if (new_value == NULL)
 		return (-1);
 	_strcpy(new_value, cmd_arg[1]);
@@ -54,9 +54,11 @@ int _setenv(char *cmd, int *ptr_err)
 			return (-1);
 		_strcpy(*env_name, new_value);
 		(*ptr_err)++;
-		free(cmd);
+		free_arrcmd(cmd_arg);
+		free(new_value);
 		return (0);
 	}
+	free_arrcmd(cmd_arg);
 	for (size = 0; environ[size]; size++);
 	new_environ = malloc(sizeof(char *) * (size + 2));
 	if (new_environ == NULL)
@@ -66,9 +68,10 @@ int _setenv(char *cmd, int *ptr_err)
 	if (new_environ[size] == NULL)
 		return (-1);
 	_strcpy(new_environ[size], new_value);
+	free_arrcmd(environ);
 	environ = new_environ;
 	environ[size + 1] = NULL;
 	(*ptr_err)++;
-	free(cmd);
+	free(new_value);
 	return (0);
 }

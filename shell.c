@@ -31,6 +31,7 @@ int main(int __attribute__((unused)) argc, char *argv[])
 			if (res == -1)
 			{
 				free(cmd);
+				free_arrcmd(environ);
 				write(STDERR_FILENO, "\n", 1);
 				exit(2);
 			}
@@ -57,6 +58,7 @@ int main(int __attribute__((unused)) argc, char *argv[])
 					printf("Good\n");
 				if (ctrl == -1)
 					printf("Error\n");
+				free(cmdLine);
 				continue;
 			}
 			parse_exec_free(cmdLine, prg, environ, &err_count);

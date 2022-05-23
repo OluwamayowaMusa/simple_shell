@@ -19,6 +19,7 @@ int exit_shell(char *cmd)
 	{
 		free(cmd);
 		free(s);
+		free_arrcmd(environ);
 		exit(0);
 	}
 	else
@@ -35,6 +36,7 @@ int exit_shell(char *cmd)
 		num = _atoi(temp);
 		free(cmd);
 		free(s);
+		free_arrcmd(environ);
 		exit(num);
 	}
 	return (0);
